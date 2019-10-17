@@ -140,6 +140,8 @@ object EvaluatorCommand : CommandWithHelp() {
 
         var licenseConfiguration = licenseConfigurationFile?.expandTilde()?.readValue<LicenseConfiguration>().orEmpty()
 
+        licenseConfiguration.licenses.associateBy {it.id }
+
         packageCurationsFile?.expandTilde()?.let {
             ortResultInput = ortResultInput.replacePackageCurations(it.readValue())
         }

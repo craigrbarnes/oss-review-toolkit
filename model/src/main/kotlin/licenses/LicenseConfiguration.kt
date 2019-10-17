@@ -32,6 +32,28 @@ data class LicenseConfiguration(
         // TODO: check that license class has entry in classes
     }
 
+    private val licensesBySetId by lazy {
+        val result = mutableMapOf<String, MutableSet<License>>()
+
+        licenseSets.forEach { set ->
+            result.put(set.id, mutableSetOf())
+        }
+
+        licenses.forEach { license ->
+            license.sets.forEach { setId ->
+                result.getOrPut(setId) { mutableSetOf() }.add(license)
+            }
+        }
+
+        result
+    }
+
+    fun getLicensesForSet(setId: String): Set<License> {
+        require(licensesBySetId.containsKey(setId)) { "Unknown license set ID: $setId." }
+
+        return licensesBySetId[setId]!!
+    }
+
     fun writeAsYaml(): String = yamlMapper.writeValueAsString(this)
 }
 
