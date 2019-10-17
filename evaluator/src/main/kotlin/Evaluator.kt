@@ -31,6 +31,7 @@ class Evaluator(ortResult: OrtResult) : ScriptRunner() {
             import com.here.ort.evaluator.*
             import com.here.ort.model.*
             import com.here.ort.model.config.*
+            import com.here.ort.model.licenses.*
             import com.here.ort.spdx.*
             import com.here.ort.utils.*
 
