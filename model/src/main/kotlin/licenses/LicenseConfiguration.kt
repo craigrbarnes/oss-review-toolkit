@@ -34,3 +34,5 @@ data class LicenseConfiguration(
 
     fun writeAsYaml(): String = yamlMapper.writeValueAsString(this)
 }
+
+fun LicenseConfiguration?.orEmpty(): LicenseConfiguration = if (this != null) this else LicenseConfiguration()
