@@ -17,5 +17,13 @@
 
 FROM openjdk:8-jdk-alpine3.9
 
-# Required to build the reporter-web-app.
-RUN apk add --no-cache yarn
+# This is a trick to copy files no matter whether we have a context or not.
+COPY * /root/
+
+RUN apk add --no-cache \
+    # Required to build the reporter-web-app.
+    yarn && \
+    # Required to allow to download via a proxy with a self-signed certificate.
+    if [ -x /root/import_proxy_certs.sh ]; then \
+        apk add --no-cache coreutils openssl && /root/import_proxy_certs.sh; \
+    fi
